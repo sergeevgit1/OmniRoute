@@ -89,6 +89,20 @@ export default function OnboardingWizard() {
 
   const [errorMessage, setErrorMessage] = useState("");
 
+  const getApiErrorMessage = (data, fallback) => {
+    const error = data?.error;
+    if (typeof error === "string") return error;
+    if (error?.message) return error.message;
+    if (Array.isArray(error?.details) && error.details[0]?.message) {
+      return error.details[0].message;
+    }
+    if (Array.isArray(data?.details) && data.details[0]?.message) {
+      return data.details[0].message;
+    }
+    if (data?.message) return data.message;
+    return fallback;
+  };
+
   const handleSetPassword = async () => {
     if (skipSecurity) {
       // (#574) Explicitly disable requireLogin when skipping password setup
@@ -112,7 +126,7 @@ export default function OnboardingWizard() {
       });
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
-        setErrorMessage(data.error || t("failedSetPassword"));
+        setErrorMessage(getApiErrorMessage(data, t("failedSetPassword")));
         return;
       }
       const loginRes = await fetch("/api/auth/login", {
@@ -464,6 +478,14 @@ export default function OnboardingWizard() {
                 >
                   {t("getStarted")}
                 </button>
+              )}
+              {errorMessage && (
+                <div
+                  role="alert"
+                  className="max-w-[220px] rounded-lg border border-red-500/20 bg-red-500/10 px-3 py-2 text-xs text-red-300"
+                >
+                  {errorMessage}
+                </div>
               )}
               {currentStep.id === "security" && (
                 <button
