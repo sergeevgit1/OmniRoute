@@ -28,6 +28,7 @@ export type ClassificationReason =
   | "public_prefix"
   | "public_readonly_prefix"
   | "onboarding_public"
+  | "bootstrap_settings_public"
   | "dashboard_prefix"
   | "client_api_v1"
   | "client_api_alias"

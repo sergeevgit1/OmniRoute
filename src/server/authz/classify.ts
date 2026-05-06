@@ -62,6 +62,16 @@ export function classifyRoute(rawPath: string, method: string = "GET"): RouteCla
     };
   }
 
+  // Initial setup writes must reach the route handler unauthenticated.
+  // The handler itself only allows writes during the bootstrap window.
+  if (normalizedPath === "/api/settings/require-login") {
+    return {
+      routeClass: "PUBLIC",
+      reason: "bootstrap_settings_public",
+      normalizedPath,
+    };
+  }
+
   if (normalizedPath.startsWith("/dashboard")) {
     return {
       routeClass: "MANAGEMENT",

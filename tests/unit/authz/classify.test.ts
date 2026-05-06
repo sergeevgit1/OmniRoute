@@ -145,10 +145,10 @@ const cases: Case[] = [
     expectedClass: "PUBLIC",
   },
   {
-    name: "/api/settings/require-login POST is MANAGEMENT",
+    name: "/api/settings/require-login POST reaches bootstrap handler",
     path: "/api/settings/require-login",
     method: "POST",
-    expectedClass: "MANAGEMENT",
+    expectedClass: "PUBLIC",
   },
 
   {
