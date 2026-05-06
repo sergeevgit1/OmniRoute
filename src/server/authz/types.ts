@@ -27,6 +27,7 @@ export type RouteClass = "PUBLIC" | "CLIENT_API" | "MANAGEMENT";
 export type ClassificationReason =
   | "public_prefix"
   | "public_readonly_prefix"
+  | "onboarding_public"
   | "dashboard_prefix"
   | "client_api_v1"
   | "client_api_alias"

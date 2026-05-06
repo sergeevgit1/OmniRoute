@@ -53,6 +53,15 @@ export function classifyRoute(rawPath: string, method: string = "GET"): RouteCla
     };
   }
 
+  // Onboarding wizard is public — accessible without auth so new instances can be set up
+  if (normalizedPath === "/dashboard/onboarding") {
+    return {
+      routeClass: "PUBLIC",
+      reason: "onboarding_public",
+      normalizedPath,
+    };
+  }
+
   if (normalizedPath.startsWith("/dashboard")) {
     return {
       routeClass: "MANAGEMENT",
